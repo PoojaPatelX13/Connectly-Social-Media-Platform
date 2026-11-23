@@ -1,6 +1,12 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import { Home, Search, User, LogOut, MessageCircle } from "lucide-react";
+import {
+    Home,
+    Search,
+    User,
+    LogOut,
+    MessageCircle,
+} from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
@@ -41,7 +47,10 @@ function Navbar() {
             <div className="nav-user">
                 {user && <span>@{user.username}</span>}
 
-                <button className="logout-btn" onClick={handleLogout}>
+                <button
+                    className="logout-btn"
+                    onClick={handleLogout}
+                >
                     <LogOut size={18} />
                     Logout
                 </button>

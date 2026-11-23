@@ -4,7 +4,8 @@ import { Heart, MessageCircle, Trash2 } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function PostCard({ post, onUpdate, onDelete }) {
     const { user, token } = useAuth();
@@ -14,10 +15,10 @@ function PostCard({ post, onUpdate, onDelete }) {
 
     const userId = user?.id || user?._id;
     const postUserId = post.user?._id || post.user;
-    const isOwner = userId === postUserId;
+    const isOwner = String(userId) === String(postUserId);
 
     const isLiked = post.likes?.some(
-        (like) => (like._id || like) === userId
+        (like) => String(like._id || like) === String(userId)
     );
 
     const handleLike = async () => {
@@ -25,8 +26,13 @@ function PostCard({ post, onUpdate, onDelete }) {
             await axios.put(
                 `${API_URL}/likes/${post._id}`,
                 {},
-                { headers: { Authorization: `Bearer ${token}` } }
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             );
+
             onUpdate();
         } catch (error) {
             alert(error.response?.data?.message || "Unable to like post");
@@ -36,8 +42,14 @@ function PostCard({ post, onUpdate, onDelete }) {
     const loadComments = async () => {
         try {
             const response = await axios.get(
-                `${API_URL}/comments/${post._id}`
+                `${API_URL}/comments/${post._id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             );
+
             setComments(response.data.comments || []);
             setShowComments(true);
         } catch (error) {
@@ -54,7 +66,11 @@ function PostCard({ post, onUpdate, onDelete }) {
             await axios.post(
                 `${API_URL}/comments/${post._id}`,
                 { text: comment },
-                { headers: { Authorization: `Bearer ${token}` } }
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             );
 
             setComment("");
@@ -65,13 +81,20 @@ function PostCard({ post, onUpdate, onDelete }) {
     };
 
     const handleDelete = async () => {
-        if (!window.confirm("Are you sure you want to delete this post?")) return;
+        if (!window.confirm("Are you sure you want to delete this post?")) {
+            return;
+        }
 
         try {
             await axios.delete(
                 `${API_URL}/posts/${post._id}`,
-                { headers: { Authorization: `Bearer ${token}` } }
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             );
+
             onDelete(post._id);
         } catch (error) {
             alert(error.response?.data?.message || "Unable to delete post");
@@ -91,7 +114,11 @@ function PostCard({ post, onUpdate, onDelete }) {
                 </div>
 
                 {isOwner && (
-                    <button className="delete-btn" onClick={handleDelete}>
+                    <button
+                        className="delete-btn"
+                        onClick={handleDelete}
+                        type="button"
+                    >
                         <Trash2 size={18} />
                     </button>
                 )}
@@ -111,12 +138,20 @@ function PostCard({ post, onUpdate, onDelete }) {
                 <button
                     className={isLiked ? "action-btn liked" : "action-btn"}
                     onClick={handleLike}
+                    type="button"
                 >
-                    <Heart size={20} fill={isLiked ? "currentColor" : "none"} />
+                    <Heart
+                        size={20}
+                        fill={isLiked ? "currentColor" : "none"}
+                    />
                     {post.likes?.length || 0}
                 </button>
 
-                <button className="action-btn" onClick={loadComments}>
+                <button
+                    className="action-btn"
+                    onClick={loadComments}
+                    type="button"
+                >
                     <MessageCircle size={20} />
                     Comments
                 </button>
@@ -131,13 +166,17 @@ function PostCard({ post, onUpdate, onDelete }) {
                         </div>
                     ))}
 
-                    <form onSubmit={handleComment} className="comment-form">
+                    <form
+                        onSubmit={handleComment}
+                        className="comment-form"
+                    >
                         <input
                             type="text"
                             placeholder="Write a comment..."
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                         />
+
                         <button type="submit">Send</button>
                     </form>
                 </div>

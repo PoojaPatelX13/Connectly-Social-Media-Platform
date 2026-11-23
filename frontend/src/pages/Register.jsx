@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -19,7 +20,8 @@ import {
 import { useAuth } from "../context/AuthContext";
 import "./Register.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function Register() {
     const navigate = useNavigate();
@@ -112,7 +114,9 @@ function Register() {
                 </Link>
 
                 <div className="auth-brand-content">
-                    <span className="auth-brand-tag">BE PART OF SOMETHING SOCIAL</span>
+                    <span className="auth-brand-tag">
+                        BE PART OF SOMETHING SOCIAL
+                    </span>
 
                     <h1>
                         Your people.
@@ -138,7 +142,9 @@ function Register() {
                             <span><MessageCircle size={19} /></span>
                             <div>
                                 <strong>Join conversations</strong>
-                                <small>Share your thoughts and interact with others.</small>
+                                <small>
+                                    Share your thoughts and interact with others.
+                                </small>
                             </div>
                         </div>
 
@@ -146,7 +152,9 @@ function Register() {
                             <span><Globe size={19} /></span>
                             <div>
                                 <strong>Discover new connections</strong>
-                                <small>Find people and grow your community.</small>
+                                <small>
+                                    Find people and grow your community.
+                                </small>
                             </div>
                         </div>
                     </div>
@@ -253,23 +261,34 @@ function Register() {
                                     type="button"
                                     className="password-toggle"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                    aria-label={
+                                        showPassword ? "Hide password" : "Show password"
+                                    }
                                 >
-                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    {showPassword ? (
+                                        <EyeOff size={18} />
+                                    ) : (
+                                        <Eye size={18} />
+                                    )}
                                 </button>
                             </div>
+
                             <small className="auth-input-hint">
                                 Use at least 6 characters.
                             </small>
                         </div>
 
                         <div className="auth-field">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <label htmlFor="confirmPassword">
+                                Confirm Password
+                            </label>
 
                             <div className="input-wrapper">
                                 <Lock size={18} />
                                 <input
-                                    type={showConfirmPassword ? "text" : "password"}
+                                    type={
+                                        showConfirmPassword ? "text" : "password"
+                                    }
                                     id="confirmPassword"
                                     name="confirmPassword"
                                     placeholder="Re-enter your password"
@@ -286,7 +305,9 @@ function Register() {
                                         setShowConfirmPassword(!showConfirmPassword)
                                     }
                                     aria-label={
-                                        showConfirmPassword ? "Hide password" : "Show password"
+                                        showConfirmPassword
+                                            ? "Hide password"
+                                            : "Show password"
                                     }
                                 >
                                     {showConfirmPassword ? (
@@ -305,7 +326,10 @@ function Register() {
                         >
                             {loading ? (
                                 <>
-                                    <LoaderCircle className="auth-loading-icon" size={19} />
+                                    <LoaderCircle
+                                        className="auth-loading-icon"
+                                        size={19}
+                                    />
                                     Creating Account...
                                 </>
                             ) : (

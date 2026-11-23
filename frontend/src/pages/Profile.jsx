@@ -35,7 +35,8 @@ import {
 import { useAuth } from "../context/AuthContext";
 import "./Profile.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function Profile({ theme, toggleTheme }) {
     const { user: authUser, token: authToken, logout } = useAuth();
@@ -163,6 +164,7 @@ function Profile({ theme, toggleTheme }) {
             setPosts(ownPosts);
 
             const followers = profileData.followers || [];
+
             setIsFollowing(
                 followers.some((follower) => {
                     const followerId =
@@ -399,10 +401,7 @@ function Profile({ theme, toggleTheme }) {
 
     return (
         <div className="profile-dashboard">
-
-            {/* SIDEBAR */}
             <aside className="profile-sidebar">
-
                 <Link to="/" className="profile-brand">
                     <div className="profile-brand-icon">
                         <Users size={25} />
@@ -437,7 +436,6 @@ function Profile({ theme, toggleTheme }) {
                 </div>
 
                 <div className="profile-sidebar-bottom">
-
                     <button
                         className="profile-sidebar-action"
                         onClick={toggleTheme}
@@ -473,10 +471,7 @@ function Profile({ theme, toggleTheme }) {
                 </div>
             </aside>
 
-            {/* MAIN CONTENT */}
             <main className="profile-dashboard-content">
-
-                {/* TOP HEADER */}
                 <header className="profile-topbar">
                     <div>
                         <span className="profile-eyebrow">
@@ -505,7 +500,6 @@ function Profile({ theme, toggleTheme }) {
                     </div>
                 </header>
 
-                {/* WELCOME BANNER */}
                 <section className="profile-welcome-banner">
                     <div className="profile-welcome-content">
                         <span className="profile-banner-label">
@@ -524,9 +518,7 @@ function Profile({ theme, toggleTheme }) {
                     <div className="profile-welcome-decoration" />
                 </section>
 
-                {/* PROFILE CARD */}
                 <section className="profile-main-card">
-
                     <div className="profile-cover">
                         <div className="profile-cover-pattern" />
                         <div className="profile-cover-orbit profile-orbit-one" />
@@ -539,9 +531,7 @@ function Profile({ theme, toggleTheme }) {
                     </div>
 
                     <div className="profile-card-body">
-
                         <div className="profile-identity-row">
-
                             <div className="profile-avatar">
                                 {profile.profileImage ? (
                                     <img
@@ -581,8 +571,7 @@ function Profile({ theme, toggleTheme }) {
                                     </button>
                                 ) : (
                                     <button
-                                        className={`profile-follow-button ${isFollowing ? "following" : ""
-                                            }`}
+                                        className={`profile-follow-button ${isFollowing ? "following" : ""}`}
                                         onClick={handleFollow}
                                         disabled={followLoading}
                                     >
@@ -599,9 +588,7 @@ function Profile({ theme, toggleTheme }) {
                             </div>
                         </div>
 
-                        {/* PROFILE DETAILS */}
                         <div className="profile-information-grid">
-
                             <div className="profile-about-panel">
                                 <div className="profile-section-title">
                                     <span className="profile-section-icon">
@@ -657,7 +644,6 @@ function Profile({ theme, toggleTheme }) {
                                 </div>
 
                                 <div className="profile-stats-grid">
-
                                     <div className="profile-stat-card">
                                         <div className="profile-stat-icon posts-icon">
                                             <FileText size={19} />
@@ -681,14 +667,12 @@ function Profile({ theme, toggleTheme }) {
                                         <strong>{followingCount}</strong>
                                         <span>Following</span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* EDIT PROFILE */}
                 {isEditing && isOwnProfile && (
                     <section className="profile-edit-section">
                         <div className="profile-edit-heading">
@@ -704,7 +688,6 @@ function Profile({ theme, toggleTheme }) {
 
                         <form onSubmit={handleSaveProfile}>
                             <div className="profile-form-grid">
-
                                 <div className="profile-form-group">
                                     <label htmlFor="fullName">Full Name</label>
                                     <input
@@ -760,7 +743,6 @@ function Profile({ theme, toggleTheme }) {
                                         placeholder="Your website URL"
                                     />
                                 </div>
-
                             </div>
 
                             <div className="profile-form-actions">
@@ -789,14 +771,16 @@ function Profile({ theme, toggleTheme }) {
                     </section>
                 )}
 
-                {/* POSTS */}
                 <section className="profile-posts-section">
-
                     <div className="profile-posts-heading">
                         <div>
                             <span className="profile-eyebrow">YOUR ACTIVITY</span>
-                            <h2>{isOwnProfile ? "Your Posts" : `${displayName}'s Posts`}</h2>
-                            <p>Conversations and moments shared with the community.</p>
+                            <h2>
+                                {isOwnProfile ? "Your Posts" : `${displayName}'s Posts`}
+                            </h2>
+                            <p>
+                                Conversations and moments shared with the community.
+                            </p>
                         </div>
 
                         <div className="profile-post-count">
@@ -882,7 +866,6 @@ function Profile({ theme, toggleTheme }) {
                     <span>© 2026 Connectly</span>
                     <span>Made for meaningful connections.</span>
                 </footer>
-
             </main>
         </div>
     );

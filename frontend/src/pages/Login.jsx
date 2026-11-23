@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,7 +18,8 @@ import {
 import { useAuth } from "../context/AuthContext";
 import "./Login.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function Login() {
     const navigate = useNavigate();
@@ -88,7 +90,9 @@ function Login() {
                 </Link>
 
                 <div className="auth-brand-content">
-                    <span className="auth-brand-tag">YOUR COMMUNITY. YOUR SPACE.</span>
+                    <span className="auth-brand-tag">
+                        YOUR COMMUNITY. YOUR SPACE.
+                    </span>
 
                     <h1>
                         Connect with people.
@@ -106,7 +110,9 @@ function Login() {
                             <span><MessageCircle size={19} /></span>
                             <div>
                                 <strong>Share your thoughts</strong>
-                                <small>Express yourself through posts and conversations.</small>
+                                <small>
+                                    Express yourself through posts and conversations.
+                                </small>
                             </div>
                         </div>
 
@@ -114,7 +120,9 @@ function Login() {
                             <span><Globe size={19} /></span>
                             <div>
                                 <strong>Discover your community</strong>
-                                <small>Explore profiles and connect with new people.</small>
+                                <small>
+                                    Explore profiles and connect with new people.
+                                </small>
                             </div>
                         </div>
 
@@ -122,7 +130,9 @@ function Login() {
                             <span><ShieldCheck size={19} /></span>
                             <div>
                                 <strong>Your personal space</strong>
-                                <small>Manage your profile and connections.</small>
+                                <small>
+                                    Manage your profile and connections.
+                                </small>
                             </div>
                         </div>
                     </div>
@@ -193,9 +203,15 @@ function Login() {
                                     type="button"
                                     className="password-toggle"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                    aria-label={
+                                        showPassword ? "Hide password" : "Show password"
+                                    }
                                 >
-                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    {showPassword ? (
+                                        <EyeOff size={18} />
+                                    ) : (
+                                        <Eye size={18} />
+                                    )}
                                 </button>
                             </div>
                         </div>
@@ -207,7 +223,10 @@ function Login() {
                         >
                             {loading ? (
                                 <>
-                                    <LoaderCircle className="auth-loading-icon" size={19} />
+                                    <LoaderCircle
+                                        className="auth-loading-icon"
+                                        size={19}
+                                    />
                                     Signing in...
                                 </>
                             ) : (

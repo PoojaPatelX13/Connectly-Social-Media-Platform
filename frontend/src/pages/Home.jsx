@@ -19,13 +19,13 @@ import {
     MoreHorizontal,
     TrendingUp,
     Sparkles,
-    Plus,
 } from "lucide-react";
 
 import { useAuth } from "../context/AuthContext";
 import "./Home.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function Home({ theme, toggleTheme }) {
     const { user, token, logout } = useAuth();

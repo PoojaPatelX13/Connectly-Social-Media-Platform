@@ -15,13 +15,13 @@ import {
     Sparkles,
     UserPlus,
     UserCheck,
-    MapPin,
 } from "lucide-react";
 
 import { useAuth } from "../context/AuthContext";
 import "./Explore.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function Explore({ theme, toggleTheme }) {
     const { user, token, logout } = useAuth();
@@ -134,29 +134,36 @@ function Explore({ theme, toggleTheme }) {
 
     return (
         <div className="explore-dashboard">
-
-            {/* SIDEBAR */}
             <aside className="explore-sidebar">
                 <Link to="/" className="explore-brand">
                     <span className="explore-brand-icon">
                         <Users size={22} />
                     </span>
-                    <span>Connectly<span className="explore-brand-dot">.</span></span>
+                    <span>
+                        Connectly<span className="explore-brand-dot">.</span>
+                    </span>
                 </Link>
 
                 <p className="explore-sidebar-label">MENU</p>
 
                 <nav className="explore-navigation">
-                    <NavLink to="/" end className={({ isActive }) =>
-                        `explore-nav-link ${isActive ? "active" : ""}`
-                    }>
+                    <NavLink
+                        to="/"
+                        end
+                        className={({ isActive }) =>
+                            `explore-nav-link ${isActive ? "active" : ""}`
+                        }
+                    >
                         <Home size={19} />
                         <span>Home</span>
                     </NavLink>
 
-                    <NavLink to="/explore" className={({ isActive }) =>
-                        `explore-nav-link ${isActive ? "active" : ""}`
-                    }>
+                    <NavLink
+                        to="/explore"
+                        className={({ isActive }) =>
+                            `explore-nav-link ${isActive ? "active" : ""}`
+                        }
+                    >
                         <Compass size={19} />
                         <span>Explore</span>
                     </NavLink>
@@ -176,7 +183,9 @@ function Explore({ theme, toggleTheme }) {
                     <div className="explore-sidebar-promo">
                         <Sparkles size={22} />
                         <h4>Grow your network</h4>
-                        <p>Connect with people and build meaningful relationships.</p>
+                        <p>
+                            Connect with people and build meaningful relationships.
+                        </p>
                     </div>
 
                     <button className="explore-logout" onClick={handleLogout}>
@@ -186,10 +195,7 @@ function Explore({ theme, toggleTheme }) {
                 </div>
             </aside>
 
-            {/* MAIN */}
             <main className="explore-main">
-
-                {/* HEADER */}
                 <header className="explore-header">
                     <div className="explore-header-title">
                         <span>DISCOVER</span>
@@ -203,7 +209,11 @@ function Explore({ theme, toggleTheme }) {
                             type="button"
                             title="Toggle theme"
                         >
-                            {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
+                            {theme === "dark" ? (
+                                <Sun size={19} />
+                            ) : (
+                                <Moon size={19} />
+                            )}
                         </button>
 
                         <button
@@ -218,16 +228,12 @@ function Explore({ theme, toggleTheme }) {
                             to={userId ? `/profile/${userId}` : "/login"}
                             className="explore-header-avatar"
                         >
-                            {avatar ? (
-                                <img src={avatar} alt={name} />
-                            ) : initials}
+                            {avatar ? <img src={avatar} alt={name} /> : initials}
                         </Link>
                     </div>
                 </header>
 
                 <div className="explore-content">
-
-                    {/* HERO */}
                     <section className="explore-hero">
                         <div className="explore-hero-text">
                             <span className="explore-hero-tag">
@@ -251,7 +257,6 @@ function Explore({ theme, toggleTheme }) {
                         </div>
                     </section>
 
-                    {/* SEARCH */}
                     <section className="explore-search-section">
                         <div className="explore-section-title">
                             <div>
@@ -260,7 +265,10 @@ function Explore({ theme, toggleTheme }) {
                             </div>
                         </div>
 
-                        <form className="explore-search-form" onSubmit={handleSearch}>
+                        <form
+                            className="explore-search-form"
+                            onSubmit={handleSearch}
+                        >
                             <Search size={20} />
 
                             <input
@@ -276,18 +284,20 @@ function Explore({ theme, toggleTheme }) {
                         </form>
                     </section>
 
-                    {/* RESULTS */}
                     <section className="explore-results-section">
                         <div className="explore-results-heading">
                             <div>
                                 <h2>
-                                    {search.trim() ? "Search results" : "People you can discover"}
+                                    {search.trim()
+                                        ? "Search results"
+                                        : "People you can discover"}
                                 </h2>
                                 <p>Connect with people on Connectly.</p>
                             </div>
 
                             <span className="explore-result-count">
-                                {users.length} {users.length === 1 ? "person" : "people"}
+                                {users.length}{" "}
+                                {users.length === 1 ? "person" : "people"}
                             </span>
                         </div>
 
@@ -335,10 +345,14 @@ function Explore({ theme, toggleTheme }) {
                                         .slice(0, 2)
                                         .toUpperCase();
 
-                                    const isFollowing = followingIds.includes(id);
+                                    const isFollowing =
+                                        followingIds.includes(id);
 
                                     return (
-                                        <article className="explore-user-card" key={id}>
+                                        <article
+                                            className="explore-user-card"
+                                            key={id}
+                                        >
                                             <div className="explore-card-top">
                                                 <span className="explore-card-badge">
                                                     <Sparkles size={12} /> CONNECTLY MEMBER
@@ -350,8 +364,13 @@ function Explore({ theme, toggleTheme }) {
                                                 className="explore-user-avatar"
                                             >
                                                 {personAvatar ? (
-                                                    <img src={personAvatar} alt={personName} />
-                                                ) : personInitials}
+                                                    <img
+                                                        src={personAvatar}
+                                                        alt={personName}
+                                                    />
+                                                ) : (
+                                                    personInitials
+                                                )}
                                             </Link>
 
                                             <h3>{personName}</h3>
@@ -361,7 +380,8 @@ function Explore({ theme, toggleTheme }) {
                                             </p>
 
                                             <p className="explore-user-bio">
-                                                {person.bio || "Building connections on Connectly."}
+                                                {person.bio ||
+                                                    "Building connections on Connectly."}
                                             </p>
 
                                             <div className="explore-user-stats">
@@ -387,9 +407,13 @@ function Explore({ theme, toggleTheme }) {
                                             <div className="explore-card-actions">
                                                 <button
                                                     type="button"
-                                                    className={`explore-follow-button ${isFollowing ? "following" : ""
+                                                    className={`explore-follow-button ${isFollowing
+                                                            ? "following"
+                                                            : ""
                                                         }`}
-                                                    onClick={() => handleFollow(id)}
+                                                    onClick={() =>
+                                                        handleFollow(id)
+                                                    }
                                                 >
                                                     {isFollowing ? (
                                                         <>
